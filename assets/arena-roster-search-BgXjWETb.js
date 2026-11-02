@@ -1,0 +1,1 @@
+import{Lf as e,Op as t}from"./GameContext-Dmnz4h9B.js";function n(n,r){let i=r.normalize(`NFKC`).trim().toLocaleLowerCase(`ko-KR`);return n.filter(n=>{let r=e[n.defId];return!!r&&(!i||[r.name,r.title,t(r.id)?.name,r.role].join(` `).normalize(`NFKC`).toLocaleLowerCase(`ko-KR`).includes(i))})}export{n as t};

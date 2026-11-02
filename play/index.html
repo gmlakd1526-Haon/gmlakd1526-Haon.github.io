@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>👑</text></svg>" />
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="ashen-playtest-build" content="main-6e50ec3 2026-11-02">
+    <script>
+      // 휴대폰 시험판: 처음 들어오면 시험 계정(?test=1)을 자동으로 켠다. ?test=0으로 끌 수 있다.
+      try {
+        var q = new URLSearchParams(location.search).get('test');
+        if (q === null && localStorage.getItem('ashen-playtest-first') === null) localStorage.setItem('ashen-test-account', '1');
+        localStorage.setItem('ashen-playtest-first', '1');
+      } catch (e) {}
+    </script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#0a0806" />
+    <meta name="color-scheme" content="dark" />
+    <title>에션 크라운 (시험판)</title>
+    <script type="module" crossorigin src="/assets/main-DEY368At.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/items-B23qh0Ol.js">
+    <link rel="modulepreload" crossorigin href="/assets/GameContext-Dmnz4h9B.js">
+    <link rel="modulepreload" crossorigin href="/assets/frontlineSentencesEn-BXw7t5OH.js">
+    <link rel="stylesheet" crossorigin href="/assets/main-BU_A9C3M.css">
+  </head>
+  <body>
+    <div id="root"></div>
+  </body>
+</html>

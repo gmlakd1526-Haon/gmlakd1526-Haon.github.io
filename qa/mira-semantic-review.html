@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Mira Semantic Layer Review</title>
+<style>
+:root{color-scheme:dark;font-family:"Noto Sans KR",system-ui,sans-serif;background:#08090b;color:#eee5d3}
+*{box-sizing:border-box}body{margin:0}.wrap{min-height:100vh;display:grid;grid-template-columns:minmax(620px,1.7fr) minmax(320px,.7fr);gap:18px;padding:18px;background:#08090b}
+.stage{position:relative;min-height:760px;overflow:hidden;border:1px solid #735b35;background:#14161b url('/ui/hub_bg_palace.jpg') center/cover no-repeat;box-shadow:0 18px 50px #0009}
+.stage:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,#05060800 45%,#06080dcc 83%,#06080df5);pointer-events:none}
+.rig{position:absolute;left:3%;bottom:0;width:55%;height:94%;isolation:isolate;filter:drop-shadow(0 25px 25px #0008);transform-origin:48% 75%}
+.rig img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;object-position:center bottom;pointer-events:none}
+.body{z-index:1}.backHair{z-index:2}.face{z-index:3}.eyesOpen,.eyesClosed{z-index:4}.frontHair{z-index:5}.prop{z-index:6}.hand{z-index:7}
+.eyesClosed{opacity:0}.rig.blink .eyesOpen{opacity:0}.rig.blink .eyesClosed{opacity:1}
+.rig.animate .backHair{animation:hair 4.8s ease-in-out infinite;transform-origin:46% 22%}.rig.animate .frontHair{animation:front 4.2s ease-in-out infinite;transform-origin:48% 20%}
+.rig.animate .hand{animation:hand 5.5s ease-in-out infinite;transform-origin:38% 66%}.rig.animate .prop{animation:prop 5.5s ease-in-out infinite;transform-origin:62% 66%}
+@keyframes hair{0%,100%{transform:translate(0,0) rotate(-.05deg)}50%{transform:translate(2px,-2px) rotate(.16deg)}}
+@keyframes front{0%,100%{transform:translate(0,0)}50%{transform:translate(1px,-1px) rotate(.08deg)}}
+@keyframes hand{0%,100%{transform:translate(0,0)}50%{transform:translate(2px,-1px) rotate(-.12deg)}}
+@keyframes prop{0%,100%{transform:translate(0,0)}50%{transform:translate(-1px,1px) rotate(.08deg)}}
+.badge{position:absolute;z-index:20;left:18px;top:18px;padding:9px 12px;border:1px solid #c68654;background:#2b120fe6;color:#ffd0ad;font-size:12px;letter-spacing:.08em}
+.caption{position:absolute;z-index:20;left:4%;bottom:4%;padding:15px 18px;background:#08090ddd;border-left:2px solid #d3ac62;max-width:44%}
+.caption strong{display:block;font-family:Georgia,serif;font-size:20px}.caption small{color:#baa988}
+.panel{border:1px solid #5f5038;background:#0d0f13;padding:18px;overflow:auto}.panel h1{font-family:Georgia,serif;font-size:20px;margin:0 0 8px;color:#e0bb70}
+.panel p{font-size:12px;line-height:1.65;color:#beb4a3}.warn{color:#ffbd8d;font-weight:700}
+.controls{display:grid;gap:8px;margin:18px 0}.controls button{height:38px;border:1px solid #6e5d3f;background:#171920;color:#eee5d3;cursor:pointer}
+.controls button.active{border-color:#d2aa60;background:#2b241a}.layers{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.layers label{font-size:12px;background:#13151a;padding:8px;border:1px solid #292d35}.tech{margin-top:18px;font:11px/1.6 ui-monospace,monospace;color:#9fa8b7;white-space:pre-wrap}
+@media(max-width:960px){.wrap{grid-template-columns:1fr}.stage{min-height:620px}.rig{width:70%}}
+</style>
+</head>
+<body><div class="wrap">
+<section class="stage"><div class="badge">MIRA SEMANTIC CANDIDATE v0 · UNREVIEWED</div>
+<div id="rig" class="rig animate">
+<img class="body" data-layer="body" src="/ui/mira-separated-candidate/body.png">
+<img class="backHair" data-layer="backHair" src="/ui/mira-separated-candidate/backHair.png">
+<img class="face" data-layer="face" src="/ui/mira-separated-candidate/face.png">
+<img class="eyesOpen" data-layer="eyesOpen" src="/ui/mira-separated-candidate/eyesOpen.png">
+<img class="eyesClosed" data-layer="eyesClosed" src="/ui/mira-separated-candidate/eyesClosed.png">
+<img class="frontHair" data-layer="frontHair" src="/ui/mira-separated-candidate/frontHair.png">
+<img class="prop" data-layer="prop" src="/ui/mira-separated-candidate/prop.png">
+<img class="hand" data-layer="hand" src="/ui/mira-separated-candidate/hand.png">
+</div>
+<div class="caption"><strong>미라 · 왕관 비서관</strong><small>semantic-layer review stage — production runtime remains independent-cutout</small></div></section>
+<aside class="panel"><h1>Mira Layer Review</h1>
+<p><span class="warn">검수 전 후보 원화.</span> 실제 게임에는 자동 승격되지 않는다. eyesClosed는 현재 합성 후보이므로 진짜 눈 레이어로 교체하기 전 activation gate가 계속 막는다.</p>
+<div class="controls"><button id="blink">눈 감기 후보 보기</button><button id="animate" class="active">미세 애니메이션 켜짐</button><button id="reset">모든 레이어 표시</button></div>
+<div id="layers" class="layers"></div><div class="tech" id="tech">loading manifest…</div></aside></div>
+<script>
+const rig=document.getElementById('rig');const imgs=[...rig.querySelectorAll('[data-layer]')];const layers=document.getElementById('layers');
+for(const img of imgs){const label=document.createElement('label');label.innerHTML='<input type="checkbox" checked> '+img.dataset.layer;const box=label.querySelector('input');box.onchange=()=>img.style.display=box.checked?'':'none';layers.append(label)}
+document.getElementById('blink').onclick=e=>{rig.classList.toggle('blink');e.currentTarget.classList.toggle('active',rig.classList.contains('blink'))};
+document.getElementById('animate').onclick=e=>{rig.classList.toggle('animate');e.currentTarget.classList.toggle('active',rig.classList.contains('animate'))};
+document.getElementById('reset').onclick=()=>{for(const x of layers.querySelectorAll('input')){x.checked=true;x.dispatchEvent(new Event('change'))}rig.classList.remove('blink')};
+fetch('/ui/mira-separated-candidate/candidate-manifest.json').then(r=>r.json()).then(m=>{document.getElementById('tech').textContent='canvas: '+m.canvas.join('×')+'\nreconstruction diff pixels: '+m.reconstruction.differentPixels+'\nmax channel delta: '+m.reconstruction.maxChannelDelta+'\neyesClosedSynthetic: '+m.eyesClosedSynthetic+'\nhumanReviewed: '+m.humanReviewed+'\nactivationAllowed: '+m.activationAllowed});
+</script></body></html>
