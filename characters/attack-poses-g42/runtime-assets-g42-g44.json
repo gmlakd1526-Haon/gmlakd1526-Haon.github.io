@@ -2308,6 +2308,35 @@
     601,
     598
    ]
+  },
+  "ur_baikan": {
+   "group": "G119_ur-baikan-white-tiger-king",
+   "prepareSource": "G119_ur-baikan-white-tiger-king/ur_baikan/05.png",
+   "prepareSha256": "877b59701bbaf67340f4344e604d82fc59e2ad7ecca81de5a6dbd8099c411a97",
+   "releaseSource": "G119_ur-baikan-white-tiger-king/ur_baikan/06.png",
+   "releaseSha256": "190bb3486b1a37d49fd465dfed71dc711e068867fbf4ed0dfb2ba3fa81f2124c",
+   "runtime": {
+    "prepare": {
+     "size": [
+      585,
+      604
+     ],
+     "sha256": "f0476fed48d1dd6c7007a2e570726ef62f85f84fd5a1ca003d0706b5c3796ab5"
+    },
+    "release": {
+     "size": [
+      585,
+      604
+     ],
+     "sha256": "95b120f15b079c0a59f197aeb60f4e44fd4139ae1bee3350733f9fa9443810e9"
+    }
+   },
+   "cropBox": [
+    27,
+    18,
+    612,
+    622
+   ]
   }
  }
 }

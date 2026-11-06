@@ -1,1 +1,0 @@
-import{s as e}from"./locale-BJAcMPK1.js";import{on as t}from"./combatArt-BHlh3n-1.js";/* empty css                      */var n=t();function r({rarity:t,compact:r=!1}){return(0,n.jsx)(`em`,{className:`character-rarity-emblem${r?` is-compact`:``}`,"data-rarity":t,"aria-label":e(`{a} 등급`,{a:t}),children:(0,n.jsx)(`b`,{children:t})})}export{r as t};

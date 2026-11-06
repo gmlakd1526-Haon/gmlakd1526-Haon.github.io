@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>애션 크라운 · 휴대폰 화면 미리보기</title>
+<style>
+  :root { color-scheme: dark; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; background: #0b0a0c; color: #e8dcc4; font: 14px/1.4 "Noto Sans KR", system-ui, sans-serif; overflow: hidden; }
+  header { height: 52px; display: flex; align-items: center; gap: 10px; padding: 0 16px; background: #15121a; border-bottom: 1px solid #3a3228; flex-wrap: wrap; }
+  header b { color: #f0cf8a; margin-right: 6px; }
+  select, button { background: #221d28; color: #e8dcc4; border: 1px solid #5a4c38; border-radius: 6px; padding: 6px 10px; font: inherit; cursor: pointer; }
+  button:hover, select:hover { border-color: #c9a46a; }
+  #info { margin-left: auto; color: #a8998a; font-size: 12px; }
+  #stage { position: absolute; top: 52px; left: 0; right: 0; bottom: 0; display: grid; place-items: center; }
+  #phone { position: relative; transform-origin: center center; border-radius: 34px; padding: 14px; background: linear-gradient(145deg, #2c2a30, #0f0e12); box-shadow: 0 0 0 2px #45404c, 0 20px 60px #000c; }
+  #phone::before { content: ""; position: absolute; background: #050507; border-radius: 10px; }
+  #phone.land::before { left: 4px; top: 50%; width: 6px; height: 80px; transform: translateY(-50%); }
+  #phone.port::before { top: 4px; left: 50%; height: 6px; width: 80px; transform: translateX(-50%); }
+  iframe { display: block; border: 0; border-radius: 22px; background: #000; }
+</style>
+</head>
+<body>
+<header>
+  <b>휴대폰 화면 미리보기</b>
+  <select id="dev" aria-label="기기">
+    <option value="844x390">아이폰 13·14·15 (844×390)</option>
+    <option value="932x430">아이폰 Pro Max (932×430)</option>
+    <option value="780x360" selected>갤럭시 S22·S23·S24 (780×360)</option>
+    <option value="915x412">갤럭시 S24+ / 울트라 (915×412)</option>
+    <option value="667x375">아이폰 SE (667×375)</option>
+    <option value="1180x820">아이패드 (1180×820)</option>
+  </select>
+  <button id="rot" type="button">가로 ↔ 세로</button>
+  <button id="real" type="button">실제 크기</button>
+  <button id="reload" type="button">새로고침</button>
+  <span id="info"></span>
+</header>
+<div id="stage"><div id="phone" class="land"><iframe id="game" src="/" title="게임 화면"></iframe></div></div>
+<script>
+  const $ = (id) => document.getElementById(id);
+  let portrait = false, realSize = false;
+  try { const s = JSON.parse(localStorage.getItem('phonePreview') || '{}'); if (s.dev) $('dev').value = s.dev; portrait = !!s.portrait; } catch (e) {}
+  function fit() {
+    let [w, h] = $('dev').value.split('x').map(Number);
+    if (portrait) [w, h] = [h, w];
+    const f = $('game'); f.style.width = w + 'px'; f.style.height = h + 'px';
+    const ph = $('phone'); ph.className = portrait ? 'port' : 'land';
+    const box = $('stage').getBoundingClientRect();
+    const scale = realSize ? 1 : Math.min((box.width - 40) / (w + 28), (box.height - 40) / (h + 28), 2);
+    ph.style.transform = `scale(${scale})`;
+    $('info').textContent = `게임이 받는 화면 크기 ${w}×${h} · 보이는 배율 ${Math.round(scale * 100)}%`;
+    try { localStorage.setItem('phonePreview', JSON.stringify({ dev: $('dev').value, portrait })); } catch (e) {}
+  }
+  $('dev').onchange = fit;
+  $('rot').onclick = () => { portrait = !portrait; fit(); };
+  $('real').onclick = () => { realSize = !realSize; $('real').textContent = realSize ? '화면에 맞추기' : '실제 크기'; fit(); };
+  $('reload').onclick = () => $('game').contentWindow.location.reload();
+  addEventListener('resize', fit);
+  fit();
+</script>
+</body>
+</html>

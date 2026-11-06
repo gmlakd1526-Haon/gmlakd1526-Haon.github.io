@@ -1,0 +1,282 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>애션 크라운 · 타이틀 시안</title>
+<style>
+:root{--gold:#e6c27a;--gold2:#b98a3e;--ink:#f3e8d4;--mute:#bfae92;--panel:rgba(14,11,9,.72);--line:rgba(230,194,122,.38)}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:#0b0907;color:var(--ink);font-family:"Noto Serif KR","Nanum Myeongjo","Malgun Gothic",serif;overflow:hidden}
+button{font:inherit;color:inherit}
+/* ── 바깥 도구줄 ── */
+.bar{position:fixed;inset:0 0 auto 0;z-index:50;display:flex;flex-wrap:wrap;gap:6px;align-items:center;padding:6px 10px;background:rgba(0,0,0,.72);font:13px/1.2 system-ui,"Malgun Gothic",sans-serif;transition:opacity .3s}
+.bar.hide{opacity:0;pointer-events:none}
+.bar b{color:var(--gold);margin-right:6px}
+.bar button{background:#2a2119;border:1px solid #5a4630;border-radius:7px;padding:5px 10px;cursor:pointer}
+.bar button[aria-pressed=true]{background:#6e5228;border-color:var(--gold)}
+.bar .sep{width:1px;height:20px;background:#5a4630;margin:0 4px}
+.bar small{color:#a89377}
+.wrap{position:fixed;inset:var(--barH,44px) 0 0 0}
+.wrap.full{inset:0}
+/* ── 무대 (게임 화면) ── */
+.stage{position:absolute;left:50%;top:50%;transform-origin:50% 50%;overflow:hidden;container-type:size;background:#000;box-shadow:0 0 0 1px #3a2d1f,0 20px 60px #000}
+.concept{position:absolute;inset:0;display:none}
+.concept.on{display:block}
+.L{position:absolute;inset:0;pointer-events:none}
+.L img{display:block}
+.tag{display:none}
+.show-layers .L{outline:1px dashed rgba(120,220,255,.55);outline-offset:-1px}
+.show-layers .tag{display:block;position:absolute;left:4px;top:4px;z-index:9;font:600 10px/1 system-ui;background:#0aa4d6;color:#000;padding:3px 5px;border-radius:3px}
+canvas.fx{position:absolute;inset:0;width:100%;height:100%}
+.ui{pointer-events:auto}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+/* 공용 버튼 */
+.btn{position:relative;display:flex;align-items:center;gap:1.2cqh;cursor:pointer;border:0;background:none;text-align:left}
+.btn .k{display:block}
+.btn strong{display:block;font-weight:700;letter-spacing:.06em}
+.btn small{display:block;color:var(--mute);font-family:system-ui,"Malgun Gothic",sans-serif}
+.rec{font-family:system-ui,"Malgun Gothic",sans-serif;color:var(--mute)}
+.rec b{color:var(--ink);font-weight:600}
+.meta{position:absolute;bottom:1.6cqh;font:500 max(9px,1.9cqh)/1 system-ui,sans-serif;color:rgba(220,205,180,.55);letter-spacing:.04em}
+.ico{width:max(30px,7.6cqh);height:max(30px,7.6cqh);border-radius:50%;display:grid;place-items:center;border:1px solid var(--line);background:rgba(10,8,6,.55);backdrop-filter:blur(4px);cursor:pointer}
+.ico svg{width:52%;height:52%;stroke:var(--gold);fill:none;stroke-width:1.6}
+.ico-row{position:absolute;display:flex;gap:1.6cqh}
+.ico-wrap{display:flex;flex-direction:column;align-items:center;gap:.6cqh;font:600 max(9px,1.9cqh)/1 system-ui,"Malgun Gothic",sans-serif;color:var(--mute)}
+
+/* ─────────── 시안 A · 잿불 왕관 ─────────── */
+#A .bg img{position:absolute;inset:-4%;width:108%;height:108%;object-fit:cover;object-position:50% 40%;filter:saturate(1.05) contrast(1.08) brightness(.9);animation:kenA 26s ease-in-out infinite alternate}
+@keyframes kenA{from{transform:scale(1) translate(0,0)}to{transform:scale(1.06) translate(-1.2%,.8%)}}
+#A .rays{background:
+ conic-gradient(from 200deg at 52% 6%,transparent 0 6deg,rgba(255,206,130,.16) 9deg,transparent 14deg 22deg,rgba(255,190,110,.12) 26deg,transparent 31deg 40deg,rgba(255,214,150,.1) 44deg,transparent 50deg 360deg);
+ mix-blend-mode:screen;animation:rayA 9s ease-in-out infinite alternate}
+@keyframes rayA{from{opacity:.55;transform:rotate(-1.5deg)}to{opacity:1;transform:rotate(1.5deg)}}
+#A .hero img{position:absolute;right:6cqw;bottom:-6cqh;height:112cqh;filter:drop-shadow(0 0 2.4cqh rgba(255,190,110,.35)) drop-shadow(-1.2cqh 0 0 rgba(255,170,90,.18));animation:breathe 6s ease-in-out infinite}
+#A .hero .rim{position:absolute;right:2cqw;bottom:0;width:46cqw;height:100cqh;background:radial-gradient(40% 55% at 60% 45%,rgba(255,170,80,.26),transparent 70%);mix-blend-mode:screen}
+@keyframes breathe{0%,100%{transform:translateY(0)}50%{transform:translateY(-.8cqh)}}
+#A .fog{background:linear-gradient(0deg,rgba(18,10,6,.95) 0,rgba(18,10,6,.55) 22%,transparent 48%),linear-gradient(90deg,rgba(8,5,3,.92) 0,rgba(8,5,3,.55) 34%,transparent 58%)}
+#A .logo img{position:absolute;left:6cqw;top:8cqh;width:min(46cqw,96cqh);filter:drop-shadow(0 .6cqh 1.4cqh #000)}
+#A .menu{position:absolute;left:6cqw;bottom:13cqh;width:min(40cqw,84cqh);display:flex;flex-direction:column;gap:1.8cqh}
+#A .rec{font-size:max(10px,2.5cqh)}
+#A .primary{padding:2.2cqh 2.6cqh;background:linear-gradient(90deg,rgba(120,72,24,.92),rgba(70,40,14,.7) 70%,transparent);border-left:.5cqh solid var(--gold);box-shadow:inset 0 0 0 1px rgba(230,194,122,.25)}
+#A .primary strong{font-size:max(15px,4.6cqh);color:#fff3dc;text-shadow:0 0 1.6cqh rgba(255,190,100,.6)}
+#A .primary small{font-size:max(10px,2.3cqh);margin-top:.5cqh}
+#A .primary::after{content:"";position:absolute;inset:0;background:linear-gradient(100deg,transparent 30%,rgba(255,230,180,.28) 45%,transparent 60%);background-size:250% 100%;animation:sheen 3.8s ease-in-out infinite}
+@keyframes sheen{from{background-position:120% 0}to{background-position:-120% 0}}
+#A .minor{display:flex;gap:1cqh}
+#A .minor .btn{flex:1;padding:1.4cqh 2cqh;border:1px solid var(--line);background:rgba(10,8,6,.55)}
+#A .minor strong{font-size:max(11px,2.7cqh)}
+#A .minor small{font-size:max(9px,1.9cqh)}
+#A .meta.l{left:6cqw}#A .meta.r{right:3cqw}
+#A .ico-row{right:3cqw;top:3cqh}
+
+/* ─────────── 시안 B · 성문 너머 ─────────── */
+#B .bg img{position:absolute;inset:-3%;width:106%;height:106%;object-fit:cover;object-position:50% 55%;filter:contrast(1.05) saturate(1.02);animation:kenB 30s ease-in-out infinite alternate}
+@keyframes kenB{from{transform:scale(1.0)}to{transform:scale(1.07) translateY(-.6%)}}
+#B .glow{background:radial-gradient(22% 30% at 62% 52%,rgba(255,210,140,.45),transparent 70%);mix-blend-mode:screen;animation:pulse 5s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:.6}50%{opacity:1}}
+#B .fog .f{position:absolute;left:-30%;width:160%;height:40cqh;bottom:-4cqh;background:radial-gradient(50% 60% at 50% 60%,rgba(200,180,160,.22),transparent 70%);filter:blur(2cqh);animation:drift 22s linear infinite}
+#B .fog .f.b{bottom:10cqh;opacity:.6;animation-duration:34s;animation-direction:reverse}
+@keyframes drift{from{transform:translateX(-8%)}to{transform:translateX(8%)}}
+#B .shade{background:linear-gradient(180deg,rgba(6,5,4,.6) 0,transparent 26%,transparent 66%,rgba(6,5,4,.88) 100%),linear-gradient(90deg,rgba(6,5,4,.78) 0,rgba(6,5,4,.35) 34%,transparent 52%)}
+#B .logo img{position:absolute;left:7cqw;top:12cqh;width:min(38cqw,76cqh);filter:drop-shadow(0 0 3cqh rgba(0,0,0,.9));animation:logoIn 2.4s cubic-bezier(.2,.7,.2,1) both}
+@keyframes logoIn{from{opacity:0;filter:blur(1cqh) drop-shadow(0 0 3cqh #000);transform:translateY(2cqh)}to{opacity:1}}
+#B .start{position:absolute;left:7cqw;width:min(38cqw,76cqh);bottom:16cqh;display:flex;flex-direction:column;align-items:center;gap:1.6cqh;cursor:pointer;background:none;border:0}
+#B .start .rec{font-size:max(10px,2.4cqh);padding:.9cqh 2.4cqh;border-radius:99px;background:rgba(8,6,4,.6);border:1px solid var(--line)}
+#B .start strong{font-size:max(14px,4.2cqh);letter-spacing:.3em;color:#fff1d6;text-shadow:0 0 2cqh rgba(255,200,120,.75),0 .3cqh .6cqh #000;animation:blink 2.6s ease-in-out infinite}
+#B .start .line{width:100%;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent)}
+@keyframes blink{0%,100%{opacity:.45}50%{opacity:1}}
+#B .ico-row{right:3cqw;bottom:4cqh}
+#B .meta.l{left:3cqw}
+#B .side{position:absolute;right:3cqw;top:3cqh;font:600 max(10px,2.2cqh)/1.4 system-ui,"Malgun Gothic",sans-serif;color:var(--mute)}
+
+/* ─────────── 시안 C · 새벽의 서약 ─────────── */
+#C .bg img{position:absolute;inset:-3%;width:106%;height:106%;object-fit:cover;object-position:40% 60%;filter:saturate(.8) brightness(.78) sepia(.25) hue-rotate(-12deg);animation:kenB 28s ease-in-out infinite alternate}
+#C .grade{background:linear-gradient(180deg,rgba(40,20,50,.55),rgba(90,40,30,.25) 45%,rgba(10,8,14,.9)),radial-gradient(45% 55% at 34% 46%,rgba(255,200,150,.3),transparent 70%);mix-blend-mode:normal}
+#C .trio{}
+#C .trio img{position:absolute;bottom:-4cqh;filter:drop-shadow(0 0 1.6cqh rgba(255,215,170,.35))}
+#C .trio .c1{left:2cqw;height:88cqh;filter:brightness(.82) drop-shadow(0 0 1.4cqh rgba(170,150,255,.35));animation:breathe 7s ease-in-out infinite}
+#C .trio .c2{left:18cqw;height:104cqh;z-index:2;animation:breathe 6s ease-in-out infinite .5s}
+#C .trio .c3{left:37cqw;height:90cqh;filter:brightness(.82) drop-shadow(0 0 1.4cqh rgba(255,170,200,.3));animation:breathe 7.5s ease-in-out infinite 1s}
+#C .floor{background:linear-gradient(0deg,rgba(10,8,14,.95),transparent 26%)}
+#C .panel{position:absolute;right:0;top:0;bottom:0;width:38cqw;background:linear-gradient(90deg,transparent,rgba(12,9,14,.78) 18%,rgba(12,9,14,.92));display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2.4cqh;padding:0 3cqw}
+#C .panel .logo{width:100%;filter:drop-shadow(0 .6cqh 1.6cqh #000)}
+#C .panel .div{width:70%;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent)}
+#C .panel .rec{font-size:max(10px,2.4cqh);text-align:center}
+#C .list{width:100%;display:flex;flex-direction:column;gap:1.2cqh}
+#C .list .btn{justify-content:center;text-align:center;padding:1.7cqh 1cqh;border:1px solid var(--line);background:rgba(255,255,255,.03);flex-direction:column;gap:.4cqh}
+#C .list .btn:hover{background:rgba(230,194,122,.1)}
+#C .list .btn strong{font-size:max(12px,3cqh)}
+#C .list .btn small{font-size:max(9px,1.9cqh)}
+#C .list .go{background:linear-gradient(180deg,#c99a4c,#8a5e24);border-color:#f0d39a;color:#1b1206}
+#C .list .go strong{font-size:max(14px,3.8cqh);color:#1b1206}
+#C .list .go small{color:#3b2a12}
+#C .row{display:flex;gap:1.2cqh}
+#C .row .btn{flex:1}
+#C .meta.l{left:3cqw}#C .meta.r{right:3cqw}
+
+/* 태블릿처럼 덜 넓은 화면: 캐릭터를 오른쪽으로 비켜 메뉴와 겹치지 않게 */
+@container (aspect-ratio < 1.55){
+ #A .hero img{right:-10cqw;height:100cqh;bottom:-2cqh}
+ #C .trio .c1{display:none}#C .trio .c2{left:2cqw}#C .trio .c3{left:24cqw}
+ #C .panel{width:44cqw}
+}
+/* 무대 밖 설명 */
+.note{position:fixed;left:10px;bottom:8px;z-index:40;max-width:560px;font:12.5px/1.5 system-ui,"Malgun Gothic",sans-serif;color:#d9c9ae;background:rgba(0,0,0,.65);padding:8px 10px;border-radius:8px}
+.note b{color:var(--gold)}
+.wrap.full + .note{display:none}
+</style>
+</head>
+<body>
+<div class="bar" id="bar">
+  <b>애션 크라운 · 타이틀 시안</b>
+  <button data-c="A" aria-pressed="true">A 잿불 왕관</button>
+  <button data-c="B" aria-pressed="false">B 성문 너머</button>
+  <button data-c="C" aria-pressed="false">C 새벽의 서약</button>
+  <span class="sep"></span>
+  <button data-s="844x390" aria-pressed="true">휴대폰 가로 844×390</button>
+  <button data-s="780x360" aria-pressed="false">780×360</button>
+  <button data-s="1280x720" aria-pressed="false">PC 1280×720</button>
+  <button data-s="1024x768" aria-pressed="false">태블릿 4:3</button>
+  <button data-s="fit" aria-pressed="false">창에 맞춤</button>
+  <span class="sep"></span>
+  <button id="layers" aria-pressed="false">층 나눠 보기</button>
+  <button id="info" aria-pressed="true">설명</button>
+  <button id="full" aria-pressed="false">전체 화면(도구줄 숨김)</button>
+  <small>무대를 두 번 누르면 도구줄이 다시 보여요</small>
+</div>
+
+<div class="wrap" id="wrap">
+<div class="stage" id="stage">
+
+  <!-- ===== A ===== -->
+  <section class="concept on" id="A" aria-label="시안 A">
+    <div class="L bg"><span class="tag">① 배경 (가시 왕관 하늘)</span><img src="bg-a-crown.webp" alt=""></div>
+    <div class="L rays"><span class="tag">② 빛줄기</span></div>
+    <canvas class="L fx" data-fx="embers"></canvas>
+    <div class="L hero"><span class="tag">③ 캐릭터 (하온)</span><div class="rim"></div><img src="ch-haon.webp" alt=""></div>
+    <div class="L fog"><span class="tag">④ 안개·그늘 (글자 읽힘 확보)</span></div>
+    <div class="L logo"><span class="tag">⑤ 제목</span><img src="logo.webp" alt="애션 크라운"></div>
+    <div class="L"><span class="tag">⑥ 메뉴</span>
+      <nav class="menu ui">
+        <div class="rec">여행자 기록 · <b>Lv. 12 · 잿빛나그네</b></div>
+        <button class="btn primary"><span class="k"><strong>여정 계속하기</strong><small>챕터 1 · 다시 왕관의 길로</small></span></button>
+        <div class="minor">
+          <button class="btn"><span class="k"><strong>설정</strong><small>저장 복원</small></span></button>
+          <button class="btn"><span class="k"><strong>크레딧</strong><small>만든 사람들</small></span></button>
+        </div>
+      </nav>
+      <div class="ico-row ui">
+        <div class="ico-wrap"><button class="ico" aria-label="공지"><svg viewBox="0 0 24 24"><path d="M4 10v4h3l6 4V6L7 10z"/><path d="M17 9a4 4 0 0 1 0 6"/></svg></button>공지</div>
+        <div class="ico-wrap"><button class="ico" aria-label="계정"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg></button>계정</div>
+      </div>
+      <div class="meta l">Ver. 0.1.0</div><div class="meta r">잿빛나그네 · AC-D6Z3-8OYW</div>
+    </div>
+  </section>
+
+  <!-- ===== B ===== -->
+  <section class="concept" id="B" aria-label="시안 B">
+    <div class="L bg"><span class="tag">① 배경 (성문과 왕성)</span><img src="bg-b-gate.webp" alt=""></div>
+    <div class="L glow"><span class="tag">② 성문 빛</span></div>
+    <canvas class="L fx" data-fx="dust"></canvas>
+    <div class="L fog"><span class="tag">③ 흐르는 안개</span><div class="f"></div><div class="f b"></div></div>
+    <div class="L shade"><span class="tag">④ 위아래 그늘</span></div>
+    <div class="L logo"><span class="tag">⑤ 제목 (성문 하늘)</span><img src="logo.webp" alt="애션 크라운"></div>
+    <div class="L"><span class="tag">⑥ 메뉴 (화면 누르기형)</span>
+      <button class="start ui"><span class="rec">여행자 기록 · <b>Lv. 12 · 잿빛나그네</b></span><strong>화면을 눌러 여정 시작</strong><span class="line"></span></button>
+      <div class="side">챕터 1 · 다시 왕관의 길로</div>
+      <div class="ico-row ui">
+        <div class="ico-wrap"><button class="ico" aria-label="설정"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M5 19l2-2M17 7l2-2"/></svg></button>설정</div>
+        <div class="ico-wrap"><button class="ico" aria-label="크레딧"><svg viewBox="0 0 24 24"><path d="M4 5h7v14H4zM13 5h7v14h-7z"/></svg></button>크레딧</div>
+        <div class="ico-wrap"><button class="ico" aria-label="공지"><svg viewBox="0 0 24 24"><path d="M4 10v4h3l6 4V6L7 10z"/><path d="M17 9a4 4 0 0 1 0 6"/></svg></button>공지</div>
+      </div>
+      <div class="meta l">Ver. 0.1.0 · 잿빛나그네 · AC-D6Z3-8OYW</div>
+    </div>
+  </section>
+
+  <!-- ===== C ===== -->
+  <section class="concept" id="C" aria-label="시안 C">
+    <div class="L bg"><span class="tag">① 배경 (새벽 들판, 색 보정)</span><img src="bg-c-dawn.webp" alt=""></div>
+    <div class="L grade"><span class="tag">② 새벽빛 색 보정</span></div>
+    <canvas class="L fx" data-fx="motes"></canvas>
+    <div class="L trio"><span class="tag">③ 캐릭터 셋 (아라 · 하온 · 시온)</span><img class="c1" src="ch-ara.webp" alt=""><img class="c2" src="ch-haon.webp" alt=""><img class="c3" src="ch-silence.webp" alt=""></div>
+    <div class="L floor"><span class="tag">④ 발밑 그늘</span></div>
+    <div class="L"><span class="tag">⑤ 제목 + ⑥ 메뉴 (오른쪽 패널)</span>
+      <aside class="panel ui">
+        <img class="logo" src="logo.webp" alt="애션 크라운">
+        <div class="div"></div>
+        <div class="rec">여행자 기록<br><b>Lv. 12 · 잿빛나그네</b></div>
+        <div class="list">
+          <button class="btn go"><strong>여정 계속하기</strong><small>챕터 1 · 다시 왕관의 길로</small></button>
+          <div class="row">
+            <button class="btn"><strong>설정</strong><small>저장 복원</small></button>
+            <button class="btn"><strong>크레딧</strong><small>만든 사람들</small></button>
+          </div>
+        </div>
+      </aside>
+      <div class="meta l">Ver. 0.1.0</div><div class="meta r">잿빛나그네 · AC-D6Z3-8OYW</div>
+    </div>
+  </section>
+
+</div>
+</div>
+<div class="note" id="note"></div>
+
+<script>
+const NOTES={
+ A:'<b>A 잿불 왕관</b> — 수집형 RPG 정석. 주인공 하온을 오른쪽에 크게, 제목·메뉴는 왼쪽에 몰아 그림과 글자가 서로 가리지 않음. 불씨가 올라가고 빛줄기가 흔들림. 캐릭터 층만 바꾸면 이벤트·신규 동료로 교체 가능.',
+ B:'<b>B 성문 너머</b> — 풍경 중심 영화형. 성문 너머 왕성으로 천천히 다가가고, 제목은 하늘, 아래엔 「화면을 눌러 시작」 한 줄만. 버튼은 오른쪽 아래 아이콘 3개. 가장 깔끔하고 화면 비율이 바뀌어도 안전.',
+ C:'<b>C 새벽의 서약</b> — 동료 셋을 왼쪽에 세우고, 오른쪽 어두운 패널에 제목·메뉴를 묶음. 글자가 그림 위에 얹히지 않아 가독성이 가장 좋음. 동료 수집 게임이라는 게 첫 화면에서 바로 보임.'};
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+let cur='A',size='844x390';
+try{const p=JSON.parse(localStorage.getItem('titleMock')||'{}');if(p.c)cur=p.c;if(p.s)size=p.s;}catch(e){}
+function save(){try{localStorage.setItem('titleMock',JSON.stringify({c:cur,s:size}))}catch(e){}}
+function layout(){
+ const st=$('#stage'),wrap=$('#wrap');document.documentElement.style.setProperty('--barH',($('#bar').classList.contains('hide')?0:$('#bar').offsetHeight)+'px');const W=wrap.clientWidth-16,H=wrap.clientHeight-16;
+ let w,h;if(size==='fit'){w=W;h=H;}else{[w,h]=size.split('x').map(Number);}
+ const k=Math.min(1,W/w,H/h);st.style.width=w+'px';st.style.height=h+'px';st.style.transform=`translate(-50%,-50%) scale(${k})`;
+}
+function pick(c){cur=c;$$('.concept').forEach(e=>e.classList.toggle('on',e.id===c));$$('[data-c]').forEach(b=>b.setAttribute('aria-pressed',b.dataset.c===c));$('#note').innerHTML=NOTES[c];save();}
+$$('[data-c]').forEach(b=>b.onclick=()=>pick(b.dataset.c));
+$$('[data-s]').forEach(b=>b.onclick=()=>{size=b.dataset.s;$$('[data-s]').forEach(x=>x.setAttribute('aria-pressed',x===b));layout();save();});
+$('#info').onclick=e=>{const n=$('#note');const on=n.style.display==='none';n.style.display=on?'':'none';e.currentTarget.setAttribute('aria-pressed',on);};
+$('#layers').onclick=e=>{const on=$('#stage').classList.toggle('show-layers');e.currentTarget.setAttribute('aria-pressed',on);};
+$('#full').onclick=()=>{$('#bar').classList.add('hide');$('#wrap').classList.add('full');layout();};
+$('#stage').ondblclick=()=>{$('#bar').classList.remove('hide');$('#wrap').classList.remove('full');layout();};
+addEventListener('resize',layout);
+$$('[data-s]').forEach(x=>x.setAttribute('aria-pressed',x.dataset.s===size));pick(cur);layout();
+
+/* 살짝 따라 움직이는 원근감 (마우스·기울기) */
+$('#stage').addEventListener('pointermove',e=>{const r=e.currentTarget.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;
+ $$('.concept.on .bg').forEach(l=>l.style.translate=`${-x*1.2}% ${-y*1.2}%`);
+ $$('.concept.on .hero, .concept.on .trio').forEach(l=>l.style.translate=`${-x*2.4}% ${-y*1.4}%`);
+ $$('.concept.on .logo').forEach(l=>l.style.translate=`${x*.8}% ${y*.6}%`);});
+
+/* 입자 효과 — 불씨 / 먼지 / 빛 알갱이 */
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+$$('canvas.fx').forEach(cv=>{
+ const kind=cv.dataset.fx,ctx=cv.getContext('2d');let W=0,H=0,P=[];
+ const N=kind==='embers'?90:kind==='dust'?70:60;
+ function rs(){const r=cv.getBoundingClientRect();const d=Math.min(2,devicePixelRatio||1);W=cv.width=Math.max(1,r.width*d|0);H=cv.height=Math.max(1,r.height*d|0);}
+ function spawn(p,init){p.x=Math.random()*W;p.y=init?Math.random()*H:(kind==='embers'?H+10:Math.random()*H);
+  p.r=(kind==='embers'?1+Math.random()*2.6:kind==='dust'?.6+Math.random()*1.8:1+Math.random()*2.2)*(W/900);
+  p.vx=(Math.random()-.5)*(kind==='dust'?.25:.5)*(W/900);p.vy=(kind==='embers'?-(.6+Math.random()*1.4):kind==='dust'?-(.05+Math.random()*.2):-(.15+Math.random()*.4))*(H/400);
+  p.life=0;p.max=200+Math.random()*400;p.ph=Math.random()*6.28;return p;}
+ for(let i=0;i<N;i++)P.push(spawn({},true));
+ function tick(){if(!cv.closest('.concept').classList.contains('on')){requestAnimationFrame(tick);return;}
+  if(cv.width!==Math.round(cv.getBoundingClientRect().width*Math.min(2,devicePixelRatio||1)))rs();
+  ctx.clearRect(0,0,W,H);ctx.globalCompositeOperation='lighter';
+  for(const p of P){p.life++;p.ph+=.03;p.x+=p.vx+Math.sin(p.ph)*.3*(W/900);p.y+=p.vy;
+   const a=Math.min(1,p.life/40)*Math.max(0,1-p.life/p.max);
+   if(p.life>p.max||p.y<-20||p.x<-20||p.x>W+20)spawn(p,false);
+   const g=ctx.createRadialGradient(p.x,p.y,0,p.x,p.y,p.r*4);
+   const col=kind==='embers'?`255,${150+Math.random()*40|0},70`:kind==='dust'?'255,226,180':'255,214,190';
+   g.addColorStop(0,`rgba(${col},${.9*a})`);g.addColorStop(.35,`rgba(${col},${.35*a})`);g.addColorStop(1,`rgba(${col},0)`);
+   ctx.fillStyle=g;ctx.beginPath();ctx.arc(p.x,p.y,p.r*4,0,6.283);ctx.fill();}
+  if(!reduce)requestAnimationFrame(tick);}
+ rs();tick();
+});
+</script>
+</body>
+</html>

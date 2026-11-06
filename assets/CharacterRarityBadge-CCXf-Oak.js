@@ -1,0 +1,1 @@
+/* empty css                      */import{Cn as e}from"./items-D-h_MkD6.js";import{wb as t}from"./GameContext-x1xVvHKP.js";var n=t();function r({rarity:t,compact:r=!1}){return(0,n.jsx)(`em`,{className:`character-rarity-emblem${r?` is-compact`:``}`,"data-rarity":t,"aria-label":e(`{a} 등급`,{a:t}),children:(0,n.jsx)(`b`,{children:t})})}export{r as t};
