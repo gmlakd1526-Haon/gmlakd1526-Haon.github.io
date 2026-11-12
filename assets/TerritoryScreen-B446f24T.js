@@ -1,0 +1,1 @@
+export{t as TerritoryScreen,n as openTerritoryTab}from"./TerritoryScreen-0X6k-5PC.js";
