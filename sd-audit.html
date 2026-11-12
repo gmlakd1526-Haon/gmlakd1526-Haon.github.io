@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Ashen Crown · Card / SD Audit</title>
+<style>
+body{margin:0;background:#171411;color:#eee;font:14px system-ui,sans-serif}
+header{position:sticky;top:0;z-index:5;background:#211b17;padding:14px 18px;border-bottom:1px solid #806842}
+h1{font-size:18px;margin:0 0 5px}.hint{color:#cdbb9c;font-size:12px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(480px,1fr));gap:12px;padding:14px}
+.item{background:#24201c;border:1px solid #594a39;border-radius:12px;padding:10px}
+.name{font-weight:800;color:#e9c16e;margin-bottom:8px}.pair{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
+.box{height:220px;position:relative;overflow:hidden;background:#0f0e0d;border:1px solid #514536;border-radius:8px}
+.box img{width:100%;height:100%;object-fit:contain;display:block}
+.box.sd img{object-position:center center}
+.box:before{content:"";position:absolute;left:50%;top:0;bottom:0;border-left:1px dashed #ee696955;z-index:2}
+.box:after{content:"";position:absolute;top:50%;left:0;right:0;border-top:1px dashed #ee696933;z-index:2}
+.lab{position:absolute;left:5px;top:5px;z-index:3;background:#000a;padding:2px 5px;border-radius:4px;font-size:10px}
+</style>
+</head>
+<body>
+<header><h1>카드 ↔ SD 정합성 / 중앙정렬 점검</h1><div class="hint">CARD / RAW SD / CENTERED SD 순서입니다. CENTERED는 SSR ashqueen의 중심 배치를 기준으로 자동 보정했습니다.</div></header>
+<div class="grid" id="grid"></div>
+<script>const ids=[
+'ssr_ashqueen','ssr_demonblade','ssr_dragonlord','ssr_abyss','ssr_forgemaster',
+'ssr_seoyeon_ash','ssr_haneul_blade','ssr_yeon_leaf','ssr_ara_moon','ssr_yuna_fox',
+'ssr_bari_wolf','ssr_chorong','ssr_hae_wave','ssr_ryu_scale','ssr_ahri_half',
+'ssr_nari_forge','ur_crownbearer','ur_embercrown','ur_silence','ur_seolhwa_crown',
+'ur_eunbyeol','ur_nari_beast','ur_lumi_fairy','ur_sora_deep','ur_yonghwa',
+'ur_eun_abyss','sr_knight','sr_mage','sr_paladin','sr_ironclad'
+];
+const rebuild=new Set(['ur_crownbearer','ur_seolhwa_crown','ur_nari_beast','ur_lumi_fairy','ur_yonghwa','ur_eun_abyss']);
+const review=new Set(['ur_silence','ur_eunbyeol']);
+const grid=document.getElementById('grid');
+fetch('/sd-placement.json').then(r=>r.json()).then(placement=>{
+ for(const id of ids){
+  const item=document.createElement('div'); item.className='item';
+  const flag=rebuild.has(id)?' ? P0 ???':review.has(id)?' ? P1 ???':'';
+  const x=placement[id]?.x||0;
+  item.innerHTML='<div class="name">'+id+flag+' ? X '+x+'%</div>'+
+  '<div class="pair"><div class="box"><span class="lab">CARD</span><img src="/characters/'+id+'.jpg" onerror="this.src='/characters/'+id+'.png'"></div>'+
+  '<div class="box sd"><span class="lab">RAW SD</span><img src="/characters/sd/'+id+'.png" onerror="this.src='/characters/sd/'+id+'.jpg'"></div>'+
+  '<div class="box sd"><span class="lab">CENTERED</span><img style="transform:translateX('+x+'%);transform-origin:center bottom" src="/characters/sd/'+id+'.png" onerror="this.src='/characters/sd/'+id+'.jpg'"></div></div>';
+  grid.appendChild(item);
+ }
+});
+</script>
+</body>
+</html>

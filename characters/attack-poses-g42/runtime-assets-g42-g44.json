@@ -2337,6 +2337,93 @@
     612,
     622
    ]
+  },
+  "sr_bronwen": {
+   "group": "G129_sr-bronwen-stormstone-tuner",
+   "prepareSource": "G129_sr-bronwen-stormstone-tuner/batch1-verified-five-partial/G129-05.png",
+   "prepareSha256": "3eb45c7284991e652a0488d02b1ef8b891d07109954a881b3dcf4a93214fcb73",
+   "releaseSource": "G129_sr-bronwen-stormstone-tuner/batch1-verified-five-partial/G129-06.png",
+   "releaseSha256": "086de64ee90825522b2e49d151d4adf737fbd797dc62112a611bf1073e9314e1",
+   "runtime": {
+    "prepare": {
+     "size": [
+      494,
+      576
+     ],
+     "sha256": "f4466359bcbe2ed911fdd216d2fee07f5660122bdc5424f96a0f69248e12af17"
+    },
+    "release": {
+     "size": [
+      494,
+      576
+     ],
+     "sha256": "4ff07e619df65b677527aa81dde4b01b9d205a6450692d2d73e8223bf15a7bb9"
+    }
+   },
+   "cropBox": [
+    118,
+    27,
+    612,
+    603
+   ]
+  },
+  "sr_narin": {
+   "group": "G130_sr-narin-dew-herbalist",
+   "prepareSource": "G130_sr-narin-dew-herbalist/batch1-verified-partial/G130-05.png",
+   "prepareSha256": "b9da8207538cc5f7b759dc01c0a22863da901ae024fb20fb1eddfc90a5d97161",
+   "releaseSource": "G130_sr-narin-dew-herbalist/batch1-verified-partial/G130-06.png",
+   "releaseSha256": "5bc1d71db0fa9cd6bf6b245d96f53b9f722f0ebc74947af46b8e450325d5b5a9",
+   "runtime": {
+    "prepare": {
+     "size": [
+      490,
+      605
+     ],
+     "sha256": "ee6ba25e77e107807e5580b00b4b4c5192a51faaca2293e9e91f99b8b41e8ff3"
+    },
+    "release": {
+     "size": [
+      490,
+      605
+     ],
+     "sha256": "22bd1116084415203f20af73df1a62f08fc8c50aab6b9d3de32b383ff5ace97f"
+    }
+   },
+   "cropBox": [
+    107,
+    18,
+    597,
+    623
+   ]
+  },
+  "r_isla": {
+   "group": "G131_r-isla-novice-priest",
+   "prepareSource": "G131_r-isla-novice-priest/batch1-verified-partial/G131-05.png",
+   "prepareSha256": "207b467dd5aadcd92070dd09b374f4b50b9c06bf0e70eca288302ad474258805",
+   "releaseSource": "G131_r-isla-novice-priest/batch1-verified-partial/G131-06.png",
+   "releaseSha256": "3aa8e028abf8eef1cb9a65bd18f877387ac75bc19a3a8b2bb6bd7e88d8ecf8b6",
+   "runtime": {
+    "prepare": {
+     "size": [
+      355,
+      583
+     ],
+     "sha256": "ed1a4ceacc75dab3b507e93451cc75e1aa20f377c0889618032b34ad6447ea27"
+    },
+    "release": {
+     "size": [
+      355,
+      583
+     ],
+     "sha256": "01191750085915e743287c5bbb1a7e07e7d01a8108b9af5f6bcbc67b7114abf5"
+    }
+   },
+   "cropBox": [
+    140,
+    31,
+    495,
+    614
+   ]
   }
  }
 }
